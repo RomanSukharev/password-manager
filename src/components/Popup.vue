@@ -18,14 +18,13 @@ const isHidden = ref<boolean>(false);
 const isPasswordVisible = ref<boolean>(false);
 const isPasswordGenerated = ref<boolean>(!!detailPassword.value);
 const showShakeAnimation = ref<boolean>(false);
-const maxLength = ref<number>(12); // Длина пароля, задаваемая в чекбоксе
+const maxLength = ref<number>(12); 
 
 watch([title, detailPassword], () => {
   isPasswordVisible.value = false;
   isPasswordGenerated.value = !!detailPassword.value;
 });
 
-// Обработчик изменения длины пароля
 watch([detailPassword], () => {
   if (detailPassword.value.length > maxLength.value) {
     detailPassword.value = detailPassword.value.slice(0, maxLength.value);
@@ -37,11 +36,10 @@ const togglePasswordVisibility = (): void => {
 };
 
 const generatePassword = (password: string): void => {
-  detailPassword.value = password.slice(0, maxLength.value); // Обрезаем пароль до заданной длины
+  detailPassword.value = password.slice(0, maxLength.value); 
   isPasswordGenerated.value = true;
 };
 
-// Функция для изменения длины пароля
 const setPasswordLength = (length: number): void => {
   maxLength.value = length;
   if (detailPassword.value.length > maxLength.value) {
@@ -95,7 +93,6 @@ onUnmounted(() => {
 });
 </script>
 
-
 <template>
   <section class="Popup__overlay" @click.self="closePopup()">
     <div class="Popup__BtnCloseArea">
@@ -111,13 +108,12 @@ onUnmounted(() => {
         <input class="Popup__passwordInput" type="text" v-model="title" placeholder="Title" />
 
         <label class="Popup__contentTitle" for="password">Пароль:</label>
-
         
         <div class="Popup__passwordField">
           <input :type="isPasswordVisible ? 'text' : 'password'" v-model="detailPassword" placeholder="Password"
             class="Popup__passwordInput" />
 
-          <PasswordGenerator v-if="!isPasswordGenerated" @generate="generatePassword" />
+          <PasswordGenerator v-if="!isPasswordGenerated" :length="maxLength" @generate="generatePassword" />
 
           <button v-if="isPasswordGenerated" @click="togglePasswordVisibility" class="Popup__toggleBtn">
             {{ isPasswordVisible ? 'Скрыть' : 'Показать' }}
@@ -130,8 +126,6 @@ onUnmounted(() => {
             class="Popup__passwordInputLenght" />
         </div>
 
-
-
         <div class="Popup__areaBtn">
           <button class="Popup__saveBtn" @click="saveChanges">Сохранить</button>
           <button class="Popup__closeBtn" @click="closePopup()">Закрыть</button>
@@ -140,6 +134,7 @@ onUnmounted(() => {
     </div>
   </section>
 </template>
+
 
 
 <style lang="scss">

@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch, defineProps } from 'vue';
+
+const props = defineProps<{
+  length: number;
+}>();
 
 const emits = defineEmits<{
   (e: 'generate', password: string): void;
 }>();
 
-
 const passwordGenerated = ref<boolean>(false);
-const length = ref<number>(12);
 const useLowerCase = ref<boolean>(false);
 const useUpperCase = ref<boolean>(false);
 const useRandomCase = ref<boolean>(false);
@@ -42,16 +44,14 @@ const generatePassword = (): void => {
   }
 
   let password = '';
-  for (let i = 0; i < length.value; i++) {
+  for (let i = 0; i < props.length; i++) {
     const randomIndex = Math.floor(Math.random() * charset.length);
     password += charset[randomIndex];
   }
   emits('generate', password);
   passwordGenerated.value = true;
 };
-
 </script>
-
 
 <template>
   <div class="PasswordGenerator__area">
@@ -83,6 +83,7 @@ const generatePassword = (): void => {
     </button>
   </div>
 </template>
+
 
 
 <style lang="scss">
