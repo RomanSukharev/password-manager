@@ -130,12 +130,15 @@
 
   ```
 
-## Сборка проекта
+### Type-Check, Compile and Minify for Production
 
- ```bash
- npm run build
-  # или
-  yarn build
+```sh
+npm run build
+```
 
-  ```
+### Lint with [ESLint](https://eslint.org/)
 
+```sh
+npm run lint
+```
+#
